@@ -1,0 +1,17 @@
+CREATE DATABASE db_shop;
+USE db_shop;
+
+CREATE TABLE  shop (
+	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	pdt_name VARCHAR(50) NOT NULL,
+    pdt_type VARCHAR(20) NOT NULL,
+    pdt_qtd INT NOT NULL,
+    pdt_price INT NOT NULL
+);
+
+/*ALTER TABLE shop AUTO_INCREMENT = 3; /* Reseta o AutoIncrement */
+/*RENAME TABLE register TO shop; /* renomear a Table */
+INSERT INTO shop VALUES ('Duble de Rico', 'Bebidas', '15', '30');
+INSERT INTO shop VALUES ('Kit Escolar', 'Outros', '10', '8');
+SELECT * FROM shop; 
+DELETE FROM shop WHERE id="04";

@@ -1,0 +1,16 @@
+.back-responsive-edit {
+   text-decoration: none;
+   // width: 0%;
+}
+
+@media (max-width: 700px) {
+   .FaPentoSquare {
+      width: 30px;
+      height: 30px;
+   }
+
+   .back-responsive-edit {
+      min-width: 238px;
+   }
+
+}
