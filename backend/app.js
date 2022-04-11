@@ -6,11 +6,9 @@ const mysql = require('mysql')
 const db = mysql.createPool({
    host: 'localhost',
    user: 'root',
-   password: 'YourPassword',
+   password: 'OnePiece',
    database: 'db_shop'
 })
-
-const select = db.query('SELECT * FROM shop')
 
 app.use(express.json())
 app.use(cors())
@@ -39,17 +37,18 @@ app.get('/products', (req, res) => {
 })
 
 app.get('/products/:id', (req, res) => {
+   const { id } = req.params
    const{ name } = req.body
    const { type } = req.body
    const { qtd } = req.body
    const { price } = req.body
-   const { id } = req.body
 
-   let SQL = "SELECT pdt_name, pdt_type, pdt_qtd, pdt_price FROM shop WHERE id =?"
+   // let SQL = "SELECT pdt_name, pdt_type, pdt_qtd, pdt_price FROM shop WHERE id =?"
+   let SQL = "SELECT * FROM shop WHERE id =?"
 
-   db.query(SQL, [name, type, qtd, price, id], (err, result) => {
+   db.query(SQL, [id], (err, result) => {
       if(err) {
-         console.log('Erro ao atualizar produto')
+         console.log('Erro ao localizar o produto')
          console.log(err)
       } else {
          // console.log(result)
@@ -79,26 +78,35 @@ app.post('/register', (req, res) => {
    })
 })
 
-app.put(`/edit`, (req, res) => {
+app.put('/edit/:id', (req, res) => {
    const{ name } = req.body
    const { type } = req.body
    const { qtd } = req.body
    const { price } = req.body
-   const { id } = req.body
+   const { id } = req.params
+
+   // console.log('ID no Back', id)
+   console.log(id, name, type, qtd, price)
     
-   /*let inputName = document.querySelector('#InputName').innerHTML = name
-   let typeProduct = document.querySelector('#TypeProduct').innerHTML = type
-   let inputQTD = document.querySelector('#InputQTD').innerHTML = qtd
-   let inputPrice = document.querySelector('#InputPrice').innerHTML = price*/
+   // let inputName = document.querySelector('#InputName')
+   // let typeProduct = document.querySelector('#TypeProduct')
+   // let inputQTD = document.querySelector('#InputQTD')
+   // let inputPrice = document.querySelector('#InputPrice')
 
-   inputName = document.querySelector('#InputName').innerHTML = name
-   document.querySelector('#TypeProduct').innerHTML = type
-   document.querySelector('#InputQTD').innerHTML = qtd
-   document.querySelector('#InputPrice').innerHTML = price
+   // inputName = document.querySelector('#InputName').innerHTML = name
+   // document.querySelector('#TypeProduct').innerHTML = type
+   // document.querySelector('#InputQTD').innerHTML = qtd
+   // document.querySelector('#InputPrice').innerHTML = price
 
+   
    let SQL = "UPDATE shop SET pdt_name = ? , pdt_type = ?, pdt_qtd = ?, pdt_price = ? WHERE id = ?"
-
+   
    db.query(SQL, [name, type, qtd, price, id], (err, result) => {
+
+      // props.name = (inputName.innerHTML = name)
+      // props.qtd = (inputQTD.innerHTML = qtd)
+      // props.price = (inputPrice.innerHTML = price)
+
       if(err) {
          console.log({msg: 'Erro ao Editar o produto'})
          console.log(err)
@@ -109,10 +117,12 @@ app.put(`/edit`, (req, res) => {
 
 })
 
-app.delete('/delete', (req, res) => {
+app.delete('/delete/:id', (req, res) => {
+   const { id } = req.params
+   
    let SQL = "DELETE FROM shop WHERE id = ?"
 
-   db.query(SQL, [id], (err, result) => {
+   db.query(SQL, id, (err, result) => {
       if(err) {
          console.log({msg: 'Erro ao deletar o produto'})
          console.log(err)

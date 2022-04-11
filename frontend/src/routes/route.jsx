@@ -12,7 +12,7 @@ export default function RoutesApp() {
             <Routes>
                <Route path='/' element={ <Main /> }></Route>
                <Route path='/register' element={ <Register /> }></Route>
-               <Route path='/edit' element={ <Edit /> }></Route>
+               <Route path='/edit/:id' element={ <Edit /> }></Route>
                <Route path='/list' element={ <ListOfProducts /> }></Route>
                <Route path='*' element={ <Error /> }></Route>
             </Routes>

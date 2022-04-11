@@ -29,7 +29,7 @@ export default function Register() {
       clearInput()
    }
 
-   const clearInput = () => {
+   function clearInput() {
       console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
 
       inputName.value = ''

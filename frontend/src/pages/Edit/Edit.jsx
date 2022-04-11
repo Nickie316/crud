@@ -1,31 +1,53 @@
-import { faCircleCheck } from "@fortawesome/free-regular-svg-icons"
+import { faCircleCheck, faListAlt } from "@fortawesome/free-regular-svg-icons"
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import FaPentoSquare from "../../components/icons/fa-pen-to-square";
 import FaBroom from "../../components/icons/fa-broom";
 import FaHouse from '../../components/icons/fa-house'
 
-export default function Edit(props) {
-   const [editProduct, setEditProduct] = useState() // Recebera a lista de Produtos
+export default function Edit() {
 
+   const { id } = useParams()
+
+   let inputName = document.querySelector('#InputName')
+   let typeProduct = document.querySelector('#TypeProduct')
+   let inputQTD = document.querySelector('#InputQTD')
+   let inputPrice = document.querySelector('#InputPrice')
+
+   
+   useEffect(() => {
+      axios.get(`http://localhost:3001/products/${id}`)
+         .then(response => {
+            console.log(response.data)
+            // console.log('Entrou no useEffect')
+
+            inputName.value = response.data[0].pdt_name
+            typeProduct.value = response.data[0].pdt_type
+            inputQTD.value = response.data[0].pdt_qtd
+            inputPrice.value = response.data[0].pdt_price
+         })
+   })
+   
    const productForEdit = () => {
-
-      axios.post('http://localhost:3001/edit', {
-         // name: inputName.value,
-         // type: typeProduct.value,
-         // qtd: inputQTD.value,
-         // price: inputPrice.value
+      
+      axios.put(`http://localhost:3001/edit/${id}`, {
+         name: inputName.value,
+         type: typeProduct.value,
+         qtd: inputQTD.value,
+         price: inputPrice.value
       })
          .then(response => {
             console.log(response.data.msg)
          })
 
-      // console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
+      console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
 
-      clearInput()
+      // clearInput()
    }
+
+   
 
    const clearInput = () => {
       // console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
@@ -52,7 +74,7 @@ export default function Edit(props) {
                      data-ph="Nome do Produto"
                      placeholder="Nome do Produto"
                      className="input text-title w-100"
-                     value = {props.name}
+                     // value = {props.name}
                   />
                </div>
 
@@ -83,31 +105,84 @@ export default function Edit(props) {
 
             </form>
 
-            <div className="flex mb-4 btn-group">
-               <Button
-                  btnType="btn btn-success mr-4 btn1"
-                  content="Atualizar"
-                  icon={faCircleCheck}
-                  function={productForEdit}
-               />
+            <div className="flex jc-a btns-group-edit w-100">
 
-               <Button
-                  btnType="btn btn-info flex"
-                  content="Limpar"
-                  customIcon={<FaBroom w='18' h='18' className="ml-1" iconColor="#212529" />}
-                  function={clearInput}
-               />
-            </div>
-
-            <div className="flex btn-back w-100">
-               <Link to="/" className="back-responsive-edit flex mx-3">
+               <div className="flex btn-group-edit-1">
                   <Button
-                     btnType="btn btn-warning w-100"
-                     content="Voltar para Home"
-                     customIcon={<FaHouse w='18' h='18' className='ml-1' iconColor='#212529' />}
+                     btnType="btn btn-success btn1 mr-2"
+                     content="Atualizar"
+                     icon={faCircleCheck}
+                     function={productForEdit}
                   />
-               </Link>
+
+                  <Button
+                     btnType="btn btn-info ml-1 flex"
+                     content="Limpar"
+                     customIcon={<FaBroom w='18' h='18' className="ml-1" iconColor="#212529" />}
+                     function={clearInput}
+                  />
+               </div>
+
+
+               <div className="flex btn-group-edit-2">
+
+                  <div className="flex btn-back ">
+                     <Link to="/" className="back-responsive-edit flex ">
+                        <Button
+                           btnType="btn btn-warning mr-2 w-100"
+                           content="Voltar para Home"
+                           customIcon={<FaHouse w='18' h='18' className='ml-1' iconColor='#212529' />}
+                        />
+                     </Link>
+                  </div>
+
+                  <div className="flex btn-edit-list ml-1">
+                     <Link to='/list'>
+                        <Button btnType="btn btn-info" content="Listagem dos Produtos" icon={faListAlt}/>
+                     </Link>
+                  </div>
+               </div>
+
             </div>
+
+            {/* 
+                  <div className="flex mb-4 btn-group">
+                     <Button
+                        btnType="btn btn-success mr-4 btn1"
+                        content="Atualizar"
+                        icon={faCircleCheck}
+                        function={productForEdit}
+                     />
+
+                     <Button
+                        btnType="btn btn-info flex"
+                        content="Limpar"
+                        customIcon={<FaBroom w='18' h='18' className="ml-1" iconColor="#212529" />}
+                        function={clearInput}
+                     />
+               </div>
+
+
+               <div className="btn-group">
+
+                  <div className="flex btn-back w-100">
+                     <Link to="/" className="back-responsive-edit flex mx-3">
+                        <Button
+                           btnType="btn btn-warning w-100"
+                           content="Voltar para Home"
+                           customIcon={<FaHouse w='18' h='18' className='ml-1' iconColor='#212529' />}
+                        />
+                     </Link>
+
+                  </div>
+
+                  <div className="flex btn-back w-100">
+                     <Link to='/list'>
+                        <Button btnType="btn btn-info" content="Listagem dos Produtos" icon={faListAlt}/>
+                     </Link>
+                  </div>
+               </div> 
+            */}
 
          </div>
 

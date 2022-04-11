@@ -800,8 +800,24 @@
   width: 100%;
 }
 
+.btns-group-edit {
+  margin-top: -24px;
+}
+
 .back-responsive-edit {
   text-decoration: none;
+}
+
+@media (max-width: 780px) {
+  .btns-group-edit {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .btn-group-edit-1 {
+    margin-bottom: 32px;
+  }
 }
 
 @media (max-width: 700px) {
@@ -809,8 +825,30 @@
     width: 30px;
     height: 30px;
   }
+  .btns-group-edit {
+    margin-top: -40px;
+  }
+  .btn-group-edit-1 {
+    margin-bottom: 0;
+  }
+  .btn-group-edit-2 {
+    margin-top: -8px;
+  }
   .back-responsive-edit {
     min-width: 238px;
+    margin-right: 0px;
+  }
+  .back-responsive-edit Button {
+    margin-right: 0;
+    width: 100%;
+  }
+  .btn-edit-list {
+    margin-left: 0;
+    min-width: 238px;
+  }
+  .btn-edit-list Button {
+    margin: 16px 0 0;
+    width: 100%;
   }
 }
 

@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowAltCircleLeft, faListAlt, faTrashCan } from "@fortawesome/free-regular-svg-icons"
+import { faListAlt, faTrashCan } from "@fortawesome/free-regular-svg-icons"
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import FaListCheck from "../../components/icons/fa-list-check";
 import FaPentoSquare from "../../components/icons/fa-pen-to-square";
+import FaHouse from "../../components/icons/fa-house";
 
 export default function ListOfProducts() {
    // let test = axios.get('http://localhost:3001/products', (req, res) => {
@@ -22,6 +23,42 @@ export default function ListOfProducts() {
          // .then(result => console.log(result.data))
          .then(response => setProduct(response.data)) // Insere o resultado
    }, [])
+
+   const updateProduct = (id) => {
+      axios.put(`http://localhost:3001/edit/${id}`, {
+         id: id
+      })
+         .then(response => {
+            setProduct(
+               product.map(prod => {
+                  return prod.id == id ? 
+                     { 
+                        id: prod.id,
+                        name: prod.name,
+                        qtd: prod.qtd,
+                        price: prod.price
+                     } : prod
+               })
+            )
+            console.log('Datas: ' + response)
+         })
+   }
+
+   const deleteProductxxx = (id) => {
+      axios.delete(`http://localhost:3001/delete/${id}`)
+      .then(response => console.log(response))
+      
+   }
+   // setProduct(product.filter(p => p.id !== id))
+
+   function deleteProduct(id) {
+      axios.delete(`http://localhost:3001/delete/${id}`)
+         .then(console.log('Id excluido: ' + id)) 
+         .then(response => console.log(response))
+      
+      // returnsetProduct(product.filter(p => p.id !== id))
+   }
+
 
    return(
       <>
@@ -54,13 +91,34 @@ export default function ListOfProducts() {
                            <td>{p.pdt_price}</td>
                            <td className="flex">
                               <div className="edit-container">
-                                 <Link to='/edit'>
-                                    <FaPentoSquare w="30" h="30" iconColor="#FFC107" className="penToSquare"/>
-                                 </Link>
-   
-                                 <Link to='/delete'>
-                                    <FontAwesomeIcon icon={faTrashCan} className="text-danger faTrashCan"/>
-                                 </Link>
+                              {/* <FaPentoSquare w="30" h="30" iconColor="#FFC107" className="penToSquare" onClick={deleteProduct(p.id)} />
+                              
+                              <button onClick={() => deleteProduct(p._id)}>
+                              
+                                 <FontAwesomeIcon icon={faTrashCan} className="text-danger faTrashCan"
+                                 />
+                              </button> */}
+
+{/* deleteProduct(p.id) */}
+
+                              <Link to={{ pathname: `/edit/${p.id}` }} onClick={updateProduct(p.id)}>
+                                 <FaPentoSquare w="30" h="30" iconColor="#FFC107" className="penToSquare"
+                                 />
+                              </Link>
+
+                              <Link to='/list' onClick={() => deleteProduct(p.id)}>
+                                 <FontAwesomeIcon icon={faTrashCan} className="text-danger faTrashCan" />
+                              </Link>
+                                 {/* {console.log('ID:' + p.id)} */}
+
+                              {/* <Link to='/edit'>
+                                 <FaPentoSquare w="30" h="30" iconColor="#FFC107" className="penToSquare"
+                                 onClick={updateProduct(p.id)}/>
+                              </Link>
+
+                              <Link to='/delete'>
+                                 <FontAwesomeIcon icon={faTrashCan} className="text-danger faTrashCan"/>
+                              </Link> */}
                               </div>
                            </td>
                         </tr>
@@ -71,7 +129,7 @@ export default function ListOfProducts() {
    
             <div className="flex mt-3 responsive">
                <Link to='/' className="back-link">
-                  <Button btnType="btn btn-warning back" content="Voltar para Home" icon={faArrowAltCircleLeft} />
+                  <Button btnType="btn btn-warning back" content="Voltar para Home" customIcon={<FaHouse w='18' h='18' className='ml-1' iconColor='#212529' />} />
                </Link>
    
                <Button btnType="btn btn-info" content="Listagem dos Produtos" icon={faListAlt}/>
