@@ -9,9 +9,18 @@ CREATE TABLE  shop (
     pdt_price INT NOT NULL
 );
 
-/*ALTER TABLE shop AUTO_INCREMENT = 3; /* Reseta o AutoIncrement */
+/*ALTER TABLE shop AUTO_INCREMENT =134; /* Reseta o AutoIncrement */
 /*RENAME TABLE register TO shop; /* renomear a Table */
-INSERT INTO shop VALUES ('Duble de Rico', 'Bebidas', '15', '30');
-INSERT INTO shop VALUES ('Kit Escolar', 'Outros', '10', '8');
+INSERT INTO shop VALUES ('01','Torresmo', 'Alimentos', '15', '5');
+INSERT INTO shop VALUES ('02', 'Salame', 'Alimentos', '10', '8');
+INSERT INTO shop VALUES ('03', 'Skol', 'Bebidas', '10', '5');
+INSERT INTO shop VALUES ('04','Brahma', 'Alimentos', '15', '5');
+INSERT INTO shop VALUES ('05', 'Itaipava', 'Alimentos', '10', '8');
+INSERT INTO shop VALUES ('06', 'Coca', 'Bebidas', '10', '5');
 SELECT * FROM shop; 
+SELECT * FROM shop WHERE id="06";
 DELETE FROM shop WHERE id="04";
+SELECT pdt_name, pdt_type, pdt_qtd, pdt_price FROM shop WHERE id ="1";
+UPDATE shop SET pdt_name = "Smirnoff", pdt_type = "Bebidas", pdt_qtd = "10", pdt_price = "30" WHERE id = "7";
+SELECT  * FROM shop WHERE id ="2";
+

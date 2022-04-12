@@ -6,7 +6,7 @@ const mysql = require('mysql')
 const db = mysql.createPool({
    host: 'localhost',
    user: 'root',
-   password: 'OnePiece',
+   password: 'YourPassword',
    database: 'db_shop'
 })
 
@@ -87,25 +87,10 @@ app.put('/edit/:id', (req, res) => {
 
    // console.log('ID no Back', id)
    console.log(id, name, type, qtd, price)
-    
-   // let inputName = document.querySelector('#InputName')
-   // let typeProduct = document.querySelector('#TypeProduct')
-   // let inputQTD = document.querySelector('#InputQTD')
-   // let inputPrice = document.querySelector('#InputPrice')
 
-   // inputName = document.querySelector('#InputName').innerHTML = name
-   // document.querySelector('#TypeProduct').innerHTML = type
-   // document.querySelector('#InputQTD').innerHTML = qtd
-   // document.querySelector('#InputPrice').innerHTML = price
-
-   
-   let SQL = "UPDATE shop SET pdt_name = ? , pdt_type = ?, pdt_qtd = ?, pdt_price = ? WHERE id = ?"
+   let SQL = "UPDATE shop SET pdt_name = ?, pdt_type = ?, pdt_qtd = ?, pdt_price = ? WHERE id = ?"
    
    db.query(SQL, [name, type, qtd, price, id], (err, result) => {
-
-      // props.name = (inputName.innerHTML = name)
-      // props.qtd = (inputQTD.innerHTML = qtd)
-      // props.price = (inputPrice.innerHTML = price)
 
       if(err) {
          console.log({msg: 'Erro ao Editar o produto'})

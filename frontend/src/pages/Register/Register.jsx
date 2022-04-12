@@ -26,7 +26,7 @@ export default function Register() {
 
       console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
 
-      clearInput()
+
    }
 
    function clearInput() {

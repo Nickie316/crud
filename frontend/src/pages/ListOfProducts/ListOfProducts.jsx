@@ -31,7 +31,7 @@ export default function ListOfProducts() {
          .then(response => {
             setProduct(
                product.map(prod => {
-                  return prod.id == id ? 
+                  return prod.id === id ? 
                      { 
                         id: prod.id,
                         name: prod.name,
@@ -44,11 +44,10 @@ export default function ListOfProducts() {
          })
    }
 
-   const deleteProductxxx = (id) => {
-      axios.delete(`http://localhost:3001/delete/${id}`)
-      .then(response => console.log(response))
-      
-   }
+   // const deleteProductxxx = (id) => {
+   //    axios.delete(`http://localhost:3001/delete/${id}`)
+   //    .then(response => console.log(response))
+   // }
    // setProduct(product.filter(p => p.id !== id))
 
    function deleteProduct(id) {
@@ -56,7 +55,7 @@ export default function ListOfProducts() {
          .then(console.log('Id excluido: ' + id)) 
          .then(response => console.log(response))
       
-      // returnsetProduct(product.filter(p => p.id !== id))
+      return setProduct(product.filter(p => p.id !== id))
    }
 
 
@@ -101,7 +100,7 @@ export default function ListOfProducts() {
 
 {/* deleteProduct(p.id) */}
 
-                              <Link to={{ pathname: `/edit/${p.id}` }} onClick={updateProduct(p.id)}>
+                              <Link to={{ pathname: `/edit/${p.id}` }}>
                                  <FaPentoSquare w="30" h="30" iconColor="#FFC107" className="penToSquare"
                                  />
                               </Link>

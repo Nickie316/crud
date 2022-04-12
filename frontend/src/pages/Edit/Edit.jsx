@@ -1,26 +1,23 @@
 import { faCircleCheck, faListAlt } from "@fortawesome/free-regular-svg-icons"
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import FaPentoSquare from "../../components/icons/fa-pen-to-square";
 import FaBroom from "../../components/icons/fa-broom";
 import FaHouse from '../../components/icons/fa-house'
 
 export default function Edit() {
-
-   const { id } = useParams()
-
+   const navigate = useNavigate()
    let inputName = document.querySelector('#InputName')
    let typeProduct = document.querySelector('#TypeProduct')
    let inputQTD = document.querySelector('#InputQTD')
    let inputPrice = document.querySelector('#InputPrice')
 
-   
    useEffect(() => {
       axios.get(`http://localhost:3001/products/${id}`)
          .then(response => {
-            console.log(response.data)
+            console.log(response.data[0])
             // console.log('Entrou no useEffect')
 
             inputName.value = response.data[0].pdt_name
@@ -28,8 +25,14 @@ export default function Edit() {
             inputQTD.value = response.data[0].pdt_qtd
             inputPrice.value = response.data[0].pdt_price
          })
+         .catch(err => console.log(err))
    })
-   
+
+   const [product, setProduct] = useState()
+
+   const { id } = useParams()
+
+
    const productForEdit = () => {
       
       axios.put(`http://localhost:3001/edit/${id}`, {
@@ -41,20 +44,36 @@ export default function Edit() {
          .then(response => {
             console.log(response.data.msg)
          })
+         .catch(err => console.log(err))
 
-      console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
+      // console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
 
       // clearInput()
    }
 
+   const updateProduct = () => {
+      
+      axios.put(`http://localhost:3001/edit/${id}`, {
+         // id: id,
+         name: inputName.value,
+         type: typeProduct.value,
+         qtd: inputQTD.value,
+         price: inputPrice.value 
+      })
+      .then(console.log('Entrou no Update'))
+      .then(response => setProduct(response.data[0]))
+
+      navigate('/list')
+   }
+   
    
 
    const clearInput = () => {
-      // console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
+      console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
 
-      // inputName.value = ''
-      // inputQTD.value = ''
-      // inputPrice.value = ''
+      inputName.value = ''
+      inputQTD.value = ''
+      inputPrice.value = ''
    }
 
    return (
@@ -92,6 +111,7 @@ export default function Edit() {
                      id="InputQTD"
                      placeholder="Quantidade"
                      className="input text-title ml-1 w-30"
+                     // value={}
                   />
 
                   <input
@@ -112,7 +132,7 @@ export default function Edit() {
                      btnType="btn btn-success btn1 mr-2"
                      content="Atualizar"
                      icon={faCircleCheck}
-                     function={productForEdit}
+                     function={updateProduct}
                   />
 
                   <Button
