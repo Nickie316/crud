@@ -13,27 +13,40 @@ export default function Edit() {
    let typeProduct = document.querySelector('#TypeProduct')
    let inputQTD = document.querySelector('#InputQTD')
    let inputPrice = document.querySelector('#InputPrice')
-
-   useEffect(() => {
-      axios.get(`http://localhost:3001/products/${id}`)
-         .then(response => {
-            console.log(response.data[0])
-            // console.log('Entrou no useEffect')
-
-            inputName.value = response.data[0].pdt_name
-            typeProduct.value = response.data[0].pdt_type
-            inputQTD.value = response.data[0].pdt_qtd
-            inputPrice.value = response.data[0].pdt_price
-         })
-         .catch(err => console.log(err))
-   })
-
+   
    const [product, setProduct] = useState()
 
    const { id } = useParams()
 
 
-   const productForEdit = () => {
+   async function getItem() {
+      await axios.get(`http://localhost:3001/products/${id}`)
+         .then(response => {
+            console.log(response.data[0])
+            let pdt_name = response.data[0].pdt_name
+            let pdt_type = response.data[0].pdt_type
+            let pdt_qtd = response.data[0].pdt_qtd
+            let pdt_price = response.data[0].pdt_price
+
+            // inputName.value = response.data[0].pdt_name
+            // typeProduct.value = response.data[0].pdt_type
+            // inputQTD.value = response.data[0].pdt_qtd
+            // inputPrice.value = response.data[0].pdt_price
+
+            inputName.value = pdt_name
+            typeProduct.value = pdt_type
+            inputQTD.value = pdt_qtd
+            inputPrice.value = pdt_price
+         })
+         .catch(err => console.log(err))
+   }
+
+   useEffect(() => {
+      getItem()
+   })
+
+
+   const productForEdit = async () => {
       
       axios.put(`http://localhost:3001/edit/${id}`, {
          name: inputName.value,
@@ -51,7 +64,7 @@ export default function Edit() {
       // clearInput()
    }
 
-   const updateProduct = () => {
+   const updateProduct = (id) => {
       
       axios.put(`http://localhost:3001/edit/${id}`, {
          // id: id,
@@ -62,13 +75,19 @@ export default function Edit() {
       })
       .then(console.log('Entrou no Update'))
       .then(response => setProduct(response.data[0]))
+      
+      // alert(`
+      //    Produto atulizado com sucesso: 
+      //    Nome: ${inputName.value},
+      //    Tipo: ${typeProduct.value},
+      //    Quantidade: ${inputQTD.value},
+      //    Preço: ${inputPrice.value }
+      // `)
 
-      navigate('/list')
+      setTimeout(() => { navigate('/list') }, 1000) 
    }
    
-   
-
-   const clearInput = () => {
+   function clearInput() {
       console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
 
       inputName.value = ''
@@ -132,14 +151,14 @@ export default function Edit() {
                      btnType="btn btn-success btn1 mr-2"
                      content="Atualizar"
                      icon={faCircleCheck}
-                     function={updateProduct}
+                     function={() => updateProduct(id)}
                   />
 
                   <Button
                      btnType="btn btn-info ml-1 flex"
                      content="Limpar"
                      customIcon={<FaBroom w='18' h='18' className="ml-1" iconColor="#212529" />}
-                     function={clearInput}
+                     function={() => clearInput()}
                   />
                </div>
 

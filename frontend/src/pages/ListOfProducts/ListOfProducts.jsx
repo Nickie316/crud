@@ -50,7 +50,7 @@ export default function ListOfProducts() {
    // }
    // setProduct(product.filter(p => p.id !== id))
 
-   function deleteProduct(id) {
+   const deleteProduct = (id) => {
       axios.delete(`http://localhost:3001/delete/${id}`)
          .then(console.log('Id excluido: ' + id)) 
          .then(response => console.log(response))

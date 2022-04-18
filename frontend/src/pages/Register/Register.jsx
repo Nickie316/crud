@@ -13,7 +13,6 @@ export default function Register() {
    let inputPrice = document.querySelector('#InputPrice')
 
    const newProduct = () => {
-
       axios.post('http://localhost:3001/register', {
          name: inputName.value,
          type: typeProduct.value,
@@ -26,7 +25,7 @@ export default function Register() {
 
       console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
 
-
+      clearInput()
    }
 
    function clearInput() {
@@ -91,14 +90,14 @@ export default function Register() {
                   btnType="btn btn-success mr-4 btn1"
                   content="Registrar"
                   icon={faCircleCheck}
-                  function={newProduct}
+                  function={() => newProduct()}
                />
 
                <Button
                   btnType="btn btn-info flex"
                   content="Limpar"
                   customIcon={<FaBroom w='18' h='18' className="ml-1" iconColor="#212529" />}
-                  function={clearInput}
+                  function={() => clearInput()}
                />
             </div>
 
