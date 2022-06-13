@@ -18,8 +18,83 @@ export default function Edit() {
 
    const { id } = useParams()
 
+   useEffect(() => {
+      // getItem()
+      // productForEdit(id)
+      updateProduct(id)
+   })
 
    async function getItem() {
+      await axios.get(`http://localhost:3001/products/${id}`)
+         .then(response => {
+            console.log(response.data[0])
+            // let pdt_name = response.data[0].pdt_name
+            // let pdt_type = response.data[0].pdt_type
+            // let pdt_qtd = response.data[0].pdt_qtd
+            // let pdt_price = response.data[0].pdt_price
+
+            // inputName.value = response.data[0].pdt_name
+            // typeProduct.value = response.data[0].pdt_type
+            // inputQTD.value = response.data[0].pdt_qtd
+            // inputPrice.value = response.data[0].pdt_price
+
+            // inputName.value = response.data[0].pdt_name
+            // typeProduct.value = response.data[0].pdt_type
+            // inputQTD.value = response.data[0].pdt_qtd
+            // inputPrice.value = response.data[0].pdt_price
+         })
+         .catch(err => console.log(err))
+   }
+
+   // Rejecct
+   // const productForEdit = async (id) => {
+   /*async function productForEdit(id) {
+      await axios.get(`http://localhost:3001/products/${id}`)
+         .then(response => {
+            console.log(response.data[0])
+            // let pdt_name = response.data[0].pdt_name
+            // let pdt_type = response.data[0].pdt_type
+            // let pdt_qtd = response.data[0].pdt_qtd
+            // let pdt_price = response.data[0].pdt_price
+
+            inputName.value = response.data[0].pdt_name
+            typeProduct.value = response.data[0].pdt_type
+            inputQTD.value = response.data[0].pdt_qtd
+            inputPrice.value = response.data[0].pdt_price
+
+            // inputName.value = pdt_name
+            // typeProduct.value = pdt_type
+            // inputQTD.value = pdt_qtd
+            // inputPrice.value = pdt_price
+         })
+         .then(
+            axios.put(`http://localhost:3001/edit/${id}`, {
+                  name: inputName.value,
+                  type: typeProduct.value,
+                  qtd: inputQTD.value,
+                  price: inputPrice.value
+            })
+               .then(() => {
+                  inputName = inputName.value
+                  typeProduct = typeProduct.value
+                  inputQTD = inputQTD.value
+                  inputPrice = inputPrice.value
+               })
+               .then(response => {
+                  console.log(response.data.msg)
+               })
+               .catch(err => console.log(err))
+      
+            // console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
+      
+            // clearInput()
+         )
+         .catch(err => console.log(err))
+   } */
+
+   // const updateProduct = async(id) => {
+   async function updateProduct(id) {
+
       await axios.get(`http://localhost:3001/products/${id}`)
          .then(response => {
             console.log(response.data[0])
@@ -28,45 +103,52 @@ export default function Edit() {
             let pdt_qtd = response.data[0].pdt_qtd
             let pdt_price = response.data[0].pdt_price
 
-            // inputName.value = response.data[0].pdt_name
-            // typeProduct.value = response.data[0].pdt_type
-            // inputQTD.value = response.data[0].pdt_qtd
-            // inputPrice.value = response.data[0].pdt_price
+            // inputName.value = pdt_name
+            // typeProduct.value = pdt_type
+            // inputQTD.value = pdt_qtd
+            // inputPrice.value = pdt_price
 
-            inputName.value = pdt_name
-            typeProduct.value = pdt_type
-            inputQTD.value = pdt_qtd
-            inputPrice.value = pdt_price
+            // inputName = response.data[0].pdt_name
+            // typeProduct = response.data[0].pdt_type
+            // inputQTD = response.data[0].pdt_qtd
+            // inputPrice = response.data[0].pdt_price
+
+            document.querySelector('#InputName').value = pdt_name
+            document.querySelector('#TypeProduct').value = pdt_type
+            document.querySelector('#InputQTD').value = pdt_qtd
+            document.querySelector('#InputPrice').value = pdt_price
+
+
+            return response.data[0]
          })
+         .then(
+            axios.put(`http://localhost:3001/edit/${id}`, {
+               id: id
+               /*name: inputName.value,
+               type: typeProduct.value,
+               qtd: inputQTD.value,
+               price: inputPrice.value */
+            })
+            .then(response => {
+               setProduct(
+                  product.map(prod => {
+                     return prod.id === id ?
+                        {
+                           id: inputName.value,
+                           name: typeProduct.value,
+                           qtd: inputQTD.value,
+                           price: inputPrice.value
+                        } : prod
+                  })
+               )
+               console.log(response)
+            })
+         )
+       
          .catch(err => console.log(err))
-   }
 
-   useEffect(() => {
-      getItem()
-   })
-
-
-   const productForEdit = async () => {
-      
-      axios.put(`http://localhost:3001/edit/${id}`, {
-         name: inputName.value,
-         type: typeProduct.value,
-         qtd: inputQTD.value,
-         price: inputPrice.value
-      })
-         .then(response => {
-            console.log(response.data.msg)
-         })
-         .catch(err => console.log(err))
-
-      // console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
-
-      // clearInput()
-   }
-
-   const updateProduct = (id) => {
-      
-      axios.put(`http://localhost:3001/edit/${id}`, {
+      setTimeout(() => { navigate('/list') }, 1000)
+      /*axios.put(`http://localhost:3001/edit/${id}`, {
          // id: id,
          name: inputName.value,
          type: typeProduct.value,
@@ -84,7 +166,7 @@ export default function Edit() {
       //    Preço: ${inputPrice.value }
       // `)
 
-      setTimeout(() => { navigate('/list') }, 1000) 
+      setTimeout(() => { navigate('/list') }, 1000) */
    }
    
    function clearInput() {

@@ -31,8 +31,8 @@ export default function ListOfProducts() {
          .then(response => {
             setProduct(
                product.map(prod => {
-                  return prod.id === id ? 
-                     { 
+                  return prod.id === id ?
+                     {
                         id: prod.id,
                         name: prod.name,
                         qtd: prod.qtd,
@@ -40,7 +40,8 @@ export default function ListOfProducts() {
                      } : prod
                })
             )
-            console.log('Datas: ' + response)
+            console.log(response)
+            // console.log('Backend funf')
          })
    }
 
@@ -52,37 +53,36 @@ export default function ListOfProducts() {
 
    const deleteProduct = (id) => {
       axios.delete(`http://localhost:3001/delete/${id}`)
-         .then(console.log('Id excluido: ' + id)) 
+         .then(console.log('Id excluido: ' + id))
          .then(response => console.log(response))
-      
+
       return setProduct(product.filter(p => p.id !== id))
    }
 
-
-   return(
+   return (
       <>
-   
+
          <div className="container flex column">
             <h1 className="text-title flex mb-4">
-                  Lista de Produtos
-                  <FaListCheck w="40" h="40" iconColor="#C1C7E0" className="ml-1 faListCheck"/>
+               Lista de Produtos
+               <FaListCheck w="40" h="40" iconColor="#C1C7E0" className="ml-1 faListCheck" />
             </h1>
-   
+
             <table>
                <thead className="text-title">
-                  <tr>  
+                  <tr>
                      <td>Nome</td>
                      <td>Tipo</td>
                      <td>Quantidade</td>
                      <td colSpan={2}>R$ Preço</td>
                   </tr>
                </thead>
-   
+
                <tbody className="bold italic">
                   {/* <Product name={`${name}`} type={`${type}`} qtd={`${qtd}`} price={`${price}`} /> */}
-   
+
                   {product.map((p) => {
-                     return(
+                     return (
                         <tr key={p.id}>
                            <td>{p.pdt_name}</td>
                            <td>{p.pdt_type}</td>
@@ -90,7 +90,7 @@ export default function ListOfProducts() {
                            <td>{p.pdt_price}</td>
                            <td className="flex">
                               <div className="edit-container">
-                              {/* <FaPentoSquare w="30" h="30" iconColor="#FFC107" className="penToSquare" onClick={deleteProduct(p.id)} />
+                                 {/* <FaPentoSquare w="30" h="30" iconColor="#FFC107" className="penToSquare" onClick={deleteProduct(p.id)} />
                               
                               <button onClick={() => deleteProduct(p._id)}>
                               
@@ -98,19 +98,20 @@ export default function ListOfProducts() {
                                  />
                               </button> */}
 
-{/* deleteProduct(p.id) */}
+                                 {/* deleteProduct(p.id) */}
 
-                              <Link to={{ pathname: `/edit/${p.id}` }}>
-                                 <FaPentoSquare w="30" h="30" iconColor="#FFC107" className="penToSquare"
-                                 />
-                              </Link>
+                                 <Link to={{ pathname: `/edit/${p.id}` }}>
+                                    <FaPentoSquare w="30" h="30" iconColor="#FFC107"      className="penToSquare"
+                                       // onClick={() => updateProduct(p.id)}
+                                    />
+                                 </Link>
 
-                              <Link to='/list' onClick={() => deleteProduct(p.id)}>
-                                 <FontAwesomeIcon icon={faTrashCan} className="text-danger faTrashCan" />
-                              </Link>
+                                 <Link to='/list' onClick={() => deleteProduct(p.id)}>
+                                    <FontAwesomeIcon icon={faTrashCan} className="text-danger faTrashCan" />
+                                 </Link>
                                  {/* {console.log('ID:' + p.id)} */}
 
-                              {/* <Link to='/edit'>
+                                 {/* <Link to='/edit'>
                                  <FaPentoSquare w="30" h="30" iconColor="#FFC107" className="penToSquare"
                                  onClick={updateProduct(p.id)}/>
                               </Link>
@@ -125,15 +126,15 @@ export default function ListOfProducts() {
                   })}
                </tbody>
             </table>
-   
+
             <div className="flex mt-3 responsive">
                <Link to='/' className="back-link">
                   <Button btnType="btn btn-warning back" content="Voltar para Home" customIcon={<FaHouse w='18' h='18' className='ml-1' iconColor='#212529' />} />
                </Link>
-   
-               <Button btnType="btn btn-info" content="Listagem dos Produtos" icon={faListAlt}/>
+
+               <Button btnType="btn btn-info" content="Listagem dos Produtos" icon={faListAlt} />
             </div>
-   
+
          </div>
       </>
    )

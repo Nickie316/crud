@@ -58,7 +58,7 @@ app.get('/products/:id', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-   const{ name } = req.body
+   const { name } = req.body
    const { type } = req.body
    const { qtd } = req.body
    const { price } = req.body
@@ -79,7 +79,7 @@ app.post('/register', (req, res) => {
 })
 
 app.put('/edit/:id', (req, res) => {
-   const{ name } = req.body
+   const { name } = req.body
    const { type } = req.body
    const { qtd } = req.body
    const { price } = req.body

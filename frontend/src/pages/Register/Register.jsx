@@ -22,6 +22,7 @@ export default function Register() {
          .then(response => {
             console.log(response.data.msg)
          })
+         .catch(err => console.log(err))
 
       console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
 
