@@ -3,11 +3,13 @@ const app = express()
 const cors = require('cors')
 const mysql = require('mysql')
 
+require('dotenv').config()
+
 const db = mysql.createPool({
-   host: 'localhost',
-   user: 'root',
-   password: 'OnePiece',
-   database: 'db_shop'
+   host: process.env.DB_HOST,
+   user: process.env.DB_USER,
+   password: process.env.DB_PASSWORD,
+   database: process.env.DB_DATABASE 
 })
 
 app.use(express.json())
@@ -76,6 +78,7 @@ app.post('/register', (req, res) => {
          res.send({msg: 'Produto Cadastrado com Sucesso', result})
       }
    })
+   console.log(`Produto Registrado: Nome: ${name}, Tipo: ${type}, Quantidade: ${qtd}, Preço: ${price}`)
 })
 
 app.put('/edit/:id', (req, res) => {
@@ -100,6 +103,7 @@ app.put('/edit/:id', (req, res) => {
       }
    })
 
+   console.log(`Produto Editado: Nome: ${name}, Tipo: ${type}, Quantidade: ${qtd}, Preço: ${price}`)
 })
 
 app.delete('/delete/:id', (req, res) => {
@@ -115,6 +119,8 @@ app.delete('/delete/:id', (req, res) => {
          res.send({msg: 'Produto Deletado com Sucesso', result})
       }
    })
+
+   console.log(`Produto Deletado de ID: ${id}`)
 })
 
 app.listen(3001, console.log('Backend Running in Port 3001'))

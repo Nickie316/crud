@@ -46,58 +46,12 @@ export default function Edit() {
          .catch(err => console.log(err))
    }
 
-   // Rejecct
-   // const productForEdit = async (id) => {
-   /*async function productForEdit(id) {
-      await axios.get(`http://localhost:3001/products/${id}`)
-         .then(response => {
-            console.log(response.data[0])
-            // let pdt_name = response.data[0].pdt_name
-            // let pdt_type = response.data[0].pdt_type
-            // let pdt_qtd = response.data[0].pdt_qtd
-            // let pdt_price = response.data[0].pdt_price
-
-            inputName.value = response.data[0].pdt_name
-            typeProduct.value = response.data[0].pdt_type
-            inputQTD.value = response.data[0].pdt_qtd
-            inputPrice.value = response.data[0].pdt_price
-
-            // inputName.value = pdt_name
-            // typeProduct.value = pdt_type
-            // inputQTD.value = pdt_qtd
-            // inputPrice.value = pdt_price
-         })
-         .then(
-            axios.put(`http://localhost:3001/edit/${id}`, {
-                  name: inputName.value,
-                  type: typeProduct.value,
-                  qtd: inputQTD.value,
-                  price: inputPrice.value
-            })
-               .then(() => {
-                  inputName = inputName.value
-                  typeProduct = typeProduct.value
-                  inputQTD = inputQTD.value
-                  inputPrice = inputPrice.value
-               })
-               .then(response => {
-                  console.log(response.data.msg)
-               })
-               .catch(err => console.log(err))
-      
-            // console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
-      
-            // clearInput()
-         )
-         .catch(err => console.log(err))
-   } */
-
    // const updateProduct = async(id) => {
    async function updateProduct(id) {
 
       await axios.get(`http://localhost:3001/products/${id}`)
          .then(response => {
-            console.log(response.data[0])
+            // console.log(response.data[0])
             let pdt_name = response.data[0].pdt_name
             let pdt_type = response.data[0].pdt_type
             let pdt_qtd = response.data[0].pdt_qtd
@@ -107,42 +61,19 @@ export default function Edit() {
             document.querySelector('#TypeProduct').value = pdt_type
             document.querySelector('#InputQTD').value = pdt_qtd
             document.querySelector('#InputPrice').value = pdt_price
-
-            // return response.data[0]
          })
          .then(
             await axios.put(`http://localhost:3001/edit/${id}`, {
                id: id,
-               // name: document.querySelector('#InputName').value,
-               // type: document.querySelector('#TypeProduct').value,
-               // qtd: document.querySelector('#InputQTD').value,
-               // price: document.querySelector('#InputPrice').value
-            })
-            .then(response => {
-               setProduct(
-                  product.map(prod => {
-                     return prod.id === id ?
-                        {
-                           id: prod.id,
-                           name: prod.name,
-                           qtd: prod.qtd,
-                           price: prod.price
-                        } : prod
-                  })
-               )
-               console.log(response)
-               // console.log('Backend funf')
+               name: document.querySelector('#InputName').value,
+               type: document.querySelector('#TypeProduct').value,
+               qtd: document.querySelector('#InputQTD').value,
+               price: document.querySelector('#InputPrice').value
             })
          )
-
-         alert(`
-               Produto atulizado com sucesso: 
-               Nome: ${inputName.value},
-               Tipo: ${typeProduct.value},
-               Quantidade: ${inputQTD.value},
-               Preço: ${inputPrice.value}
-         `)
-         setTimeout(() => { navigate('/list') }, 300)
+         .then(
+            setTimeout(() => { navigate('/list') }, 500)
+         )
          .catch(err => console.log(err))
    }
 
@@ -221,7 +152,6 @@ export default function Edit() {
                   />
                </div>
 
-
                <div className="flex btn-group-edit-2">
 
                   <div className="flex btn-back ">
@@ -242,45 +172,6 @@ export default function Edit() {
                </div>
 
             </div>
-
-            {/* 
-                  <div className="flex mb-4 btn-group">
-                     <Button
-                        btnType="btn btn-success mr-4 btn1"
-                        content="Atualizar"
-                        icon={faCircleCheck}
-                        function={productForEdit}
-                     />
-
-                     <Button
-                        btnType="btn btn-info flex"
-                        content="Limpar"
-                        customIcon={<FaBroom w='18' h='18' className="ml-1" iconColor="#212529" />}
-                        function={clearInput}
-                     />
-               </div>
-
-
-               <div className="btn-group">
-
-                  <div className="flex btn-back w-100">
-                     <Link to="/" className="back-responsive-edit flex mx-3">
-                        <Button
-                           btnType="btn btn-warning w-100"
-                           content="Voltar para Home"
-                           customIcon={<FaHouse w='18' h='18' className='ml-1' iconColor='#212529' />}
-                        />
-                     </Link>
-
-                  </div>
-
-                  <div className="flex btn-back w-100">
-                     <Link to='/list'>
-                        <Button btnType="btn btn-info" content="Listagem dos Produtos" icon={faListAlt}/>
-                     </Link>
-                  </div>
-               </div> 
-            */}
 
          </div>
 

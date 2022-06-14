@@ -1,7 +1,7 @@
 import { faCircleCheck} from '@fortawesome/free-regular-svg-icons'
 import Button from '../../components/Button/Button'
 import FaRegister from '../../components/icons/fa-register'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import FaBroom from '../../components/icons/fa-broom'
 import FaHouse from '../../components/icons/fa-house'
@@ -12,17 +12,21 @@ export default function Register() {
    let inputQTD = document.querySelector('#InputQTD')
    let inputPrice = document.querySelector('#InputPrice')
 
+   const navigate = useNavigate()
+
    const newProduct = () => {
       axios.post('http://localhost:3001/register', {
-         name: inputName.value,
-         type: typeProduct.value,
-         qtd: inputQTD.value,
-         price: inputPrice.value
+         name: document.querySelector('#InputName').value,
+         type: document.querySelector('#TypeProduct').value,
+         qtd: document.querySelector('#InputQTD').value,
+         price: document.querySelector('#InputPrice').value
       })
          .then(response => {
             console.log(response.data.msg)
          })
-         .catch(err => console.log(err))
+      .then(alert('Produto Cadastrado com Sucesso!'))
+      .then(setInterval(() => { navigate('/') }, 500))
+      .catch(err => console.log(err))
 
       console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
 

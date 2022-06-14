@@ -101,7 +101,7 @@ export default function ListOfProducts() {
                                  {/* deleteProduct(p.id) */}
 
                                  <Link to={{ pathname: `/edit/${p.id}` }}>
-                                    <FaPentoSquare w="30" h="30" iconColor="#FFC107"      className="penToSquare"
+                                    <FaPentoSquare w="30" h="30" iconColor="#FFC107" className="penToSquare"
                                        // onClick={() => updateProduct(p.id)}
                                     />
                                  </Link>

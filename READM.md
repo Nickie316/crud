@@ -11,7 +11,7 @@ Manager system of shop,  register of products.
 
 **Frontend:** React *(w/React Router)*, FontAwesome Icons *(free and pro)*, SASS *(variables)*, styles of buttons *(colors and aparence)* from Bootstrap, Axios.
 
-**Backend:** MySQL, Express, Axios, Cors.
+**Backend:** MySQL, Express, Axios, Cors, Dotenv.
 ## References 
 
  - [Video of Vitor Conha Code](https://www.youtube.com/watch?v=e0He6sCiQT8&ab_channel=VitorCunhaCode)
