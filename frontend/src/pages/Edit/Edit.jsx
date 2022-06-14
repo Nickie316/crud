@@ -13,7 +13,7 @@ export default function Edit() {
    let typeProduct = document.querySelector('#TypeProduct')
    let inputQTD = document.querySelector('#InputQTD')
    let inputPrice = document.querySelector('#InputPrice')
-   
+
    const [product, setProduct] = useState()
 
    const { id } = useParams()
@@ -103,72 +103,49 @@ export default function Edit() {
             let pdt_qtd = response.data[0].pdt_qtd
             let pdt_price = response.data[0].pdt_price
 
-            // inputName.value = pdt_name
-            // typeProduct.value = pdt_type
-            // inputQTD.value = pdt_qtd
-            // inputPrice.value = pdt_price
-
-            // inputName = response.data[0].pdt_name
-            // typeProduct = response.data[0].pdt_type
-            // inputQTD = response.data[0].pdt_qtd
-            // inputPrice = response.data[0].pdt_price
-
             document.querySelector('#InputName').value = pdt_name
             document.querySelector('#TypeProduct').value = pdt_type
             document.querySelector('#InputQTD').value = pdt_qtd
             document.querySelector('#InputPrice').value = pdt_price
 
-
-            return response.data[0]
+            // return response.data[0]
          })
          .then(
-            axios.put(`http://localhost:3001/edit/${id}`, {
-               id: id
-               /*name: inputName.value,
-               type: typeProduct.value,
-               qtd: inputQTD.value,
-               price: inputPrice.value */
+            await axios.put(`http://localhost:3001/edit/${id}`, {
+               id: id,
+               // name: document.querySelector('#InputName').value,
+               // type: document.querySelector('#TypeProduct').value,
+               // qtd: document.querySelector('#InputQTD').value,
+               // price: document.querySelector('#InputPrice').value
             })
             .then(response => {
                setProduct(
                   product.map(prod => {
                      return prod.id === id ?
                         {
-                           id: inputName.value,
-                           name: typeProduct.value,
-                           qtd: inputQTD.value,
-                           price: inputPrice.value
+                           id: prod.id,
+                           name: prod.name,
+                           qtd: prod.qtd,
+                           price: prod.price
                         } : prod
                   })
                )
                console.log(response)
+               // console.log('Backend funf')
             })
          )
-       
+
+         alert(`
+               Produto atulizado com sucesso: 
+               Nome: ${inputName.value},
+               Tipo: ${typeProduct.value},
+               Quantidade: ${inputQTD.value},
+               Preço: ${inputPrice.value}
+         `)
+         setTimeout(() => { navigate('/list') }, 300)
          .catch(err => console.log(err))
-
-      setTimeout(() => { navigate('/list') }, 1000)
-      /*axios.put(`http://localhost:3001/edit/${id}`, {
-         // id: id,
-         name: inputName.value,
-         type: typeProduct.value,
-         qtd: inputQTD.value,
-         price: inputPrice.value 
-      })
-      .then(console.log('Entrou no Update'))
-      .then(response => setProduct(response.data[0]))
-      
-      // alert(`
-      //    Produto atulizado com sucesso: 
-      //    Nome: ${inputName.value},
-      //    Tipo: ${typeProduct.value},
-      //    Quantidade: ${inputQTD.value},
-      //    Preço: ${inputPrice.value }
-      // `)
-
-      setTimeout(() => { navigate('/list') }, 1000) */
    }
-   
+
    function clearInput() {
       console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
 
@@ -179,10 +156,10 @@ export default function Edit() {
 
    return (
       <>
-      <div className="container flex column">
+         <div className="container flex column">
             <h1 className='h1 flex text-title'>
                Editar o Produto
-               <FaPentoSquare w='40' h='40' iconColor='#C1C7E0' className="pl-1"/>
+               <FaPentoSquare w='40' h='40' iconColor='#C1C7E0' className="pl-1" />
             </h1>
 
             <form action="#" className="container flex column">
@@ -194,7 +171,7 @@ export default function Edit() {
                      data-ph="Nome do Produto"
                      placeholder="Nome do Produto"
                      className="input text-title w-100"
-                     // value = {props.name}
+                  // value = {props.name}
                   />
                </div>
 
@@ -212,7 +189,7 @@ export default function Edit() {
                      id="InputQTD"
                      placeholder="Quantidade"
                      className="input text-title ml-1 w-30"
-                     // value={}
+                  // value={}
                   />
 
                   <input
@@ -259,7 +236,7 @@ export default function Edit() {
 
                   <div className="flex btn-edit-list ml-1">
                      <Link to='/list'>
-                        <Button btnType="btn btn-info" content="Listagem dos Produtos" icon={faListAlt}/>
+                        <Button btnType="btn btn-info" content="Listagem dos Produtos" icon={faListAlt} />
                      </Link>
                   </div>
                </div>
