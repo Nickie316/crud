@@ -25,20 +25,17 @@ export default function Register() {
             console.log(response.data.msg)
          })
       .then(alert('Produto Cadastrado com Sucesso!'))
-      .then(setInterval(() => { navigate('/') }, 500))
+      .then(setTimeout(() => navigate('/'), 500))
+      .then(() => clearInput())
       .catch(err => console.log(err))
 
       console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
-
-      clearInput()
    }
 
    function clearInput() {
-      console.log(inputName.value, typeProduct.value, inputQTD.value, inputPrice.value)
-
-      inputName.value = ''
-      inputQTD.value = ''
-      inputPrice.value = ''
+      document.querySelector('#InputName').value = ''
+      document.querySelector('#InputQTD').value = ''
+      document.querySelector('#InputPrice').value = ''
    }
 
    return (

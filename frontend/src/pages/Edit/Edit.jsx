@@ -19,8 +19,6 @@ export default function Edit() {
    const { id } = useParams()
 
    useEffect(() => {
-      // getItem()
-      // productForEdit(id)
       updateProduct(id)
    })
 
@@ -72,6 +70,7 @@ export default function Edit() {
             })
          )
          .then(
+            alert('Produto Atulizado com Sucesso'),
             setTimeout(() => { navigate('/list') }, 500)
          )
          .catch(err => console.log(err))

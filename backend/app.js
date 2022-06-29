@@ -19,7 +19,7 @@ app.use(cors())
 //    res.send('Hello World')
 // })
 
-app.get('/products', (req, res) => {
+app.get('/products', async(req, res) => {
    // const{ name } = req.body
    // const { type } = req.body
    // const { qtd } = req.body
@@ -59,7 +59,7 @@ app.get('/products/:id', (req, res) => {
    })
 })
 
-app.post('/register', (req, res) => {
+app.post('/register', async(req, res) => {
    const { name } = req.body
    const { type } = req.body
    const { qtd } = req.body
@@ -70,12 +70,12 @@ app.post('/register', (req, res) => {
    // `INSERT INTO shop (pdt_name, pdt_type, pdt_qtd, pdt_price) VALUES (?, ?, ?, ?), 
    // [${name}, ${type}, ${qtd}, ${price}]`, 
 
-   db.query(SQL, [name, type, qtd, price],  (err, result) => {
+   db.query(SQL, [name, type, qtd, price],  async(err, result) => {
       if(err) {
          console.log({msg: 'Erro ao cadastrar o produto'})
          console.log(err)
       } else {
-         res.send({msg: 'Produto Cadastrado com Sucesso', result})
+         await res.send({msg: 'Produto Cadastrado com Sucesso', result})
       }
    })
    console.log(`Produto Registrado: Nome: ${name}, Tipo: ${type}, Quantidade: ${qtd}, Preço: ${price}`)
@@ -93,13 +93,13 @@ app.put('/edit/:id', (req, res) => {
 
    let SQL = "UPDATE shop SET pdt_name = ?, pdt_type = ?, pdt_qtd = ?, pdt_price = ? WHERE id = ?"
    
-   db.query(SQL, [name, type, qtd, price, id], (err, result) => {
+   db.query(SQL, [name, type, qtd, price, id], async(err, result) => {
 
       if(err) {
-         console.log({msg: 'Erro ao Editar o produto'})
-         console.log(err)
+         await console.log({msg: 'Erro ao Editar o produto'})
+         await console.log(err)
       } else {
-         res.send({msg: 'Produto Atualizado com Sucesso', result})
+         await res.send({msg: 'Produto Atualizado com Sucesso', result})
       }
    })
 
